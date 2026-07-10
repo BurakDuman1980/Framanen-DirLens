@@ -8,7 +8,7 @@ Developed by **Burak Duman**, this tool is open-source and completely free to us
 
 ## 📸 Screenshot
 
-![Framanen DirLens Screenshot](screenshot.png)
+![Framanen DirLens Screenshot](screenshot2.jpg)
 
 ---
 
