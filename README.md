@@ -1,6 +1,8 @@
 # Framanen DirLens - Folder Size Analyzer
 
-**Framanen DirLens** is a lightweight, fast, and feature-rich desktop application designed to scan folders, analyze disk usage, and help you find which files and folders are occupying the most space. 
+**Version 2.0.0**
+
+**Framanen DirLens** is a lightweight, fast, and feature-rich desktop application designed to scan folders, analyze disk usage, and help you find which files and folders are occupying the most space — on your **local disks**, on an **FTP / FTPS server**, or on an **SSH (SFTP) server**. 
 
 Developed by **Burak Duman**, this tool is open-source and completely free to use.
 
@@ -15,6 +17,8 @@ Developed by **Burak Duman**, this tool is open-source and completely free to us
 ## 🚀 Key Features
 
 * **Fast Scan:** Recursively scans and calculates folder sizes with real-time progress indicators.
+* **Remote Scan (new in 2.0.0):** Connect to an **FTP**, **FTPS (TLS)** or **SFTP (SSH)** server and see remote folder and file sizes exactly the way you see local ones.
+* **Stop Button:** Cancel a long-running scan at any time — useful for large remote directory trees.
 * **Size Visualization:** Shows folder and file sizes along with a color-coded percentage ratio bar chart.
 * **Interactive Navigation:** 
   * Double-click a folder to navigate down and scan its contents.
@@ -22,6 +26,36 @@ Developed by **Burak Duman**, this tool is open-source and completely free to us
   * Double-click a file to open it with your system's default application.
 * **Actionable Deletion:** Click the trash bin icon (`🗑️`) next to any item to delete it permanently after a safe confirmation prompt.
 * **Multi-Language Support:** Change the application language on-the-fly via the menu bar.
+
+---
+
+## 🌍 How to See Folder and File Sizes over FTP / SSH
+
+1. Open the **Connection** menu and choose **FTP / SSH Connection...**
+2. Pick the protocol:
+   * **FTP** — plain FTP (default port 21)
+   * **FTPS (TLS)** — FTP over TLS (default port 21)
+   * **SFTP (SSH)** — file transfer over SSH (default port 22)
+3. Fill in host, port, username and password. For SFTP you may instead pick a
+   private key file, or leave the password empty to use your SSH agent / default
+   keys. For public FTP servers, tick **Anonymous login**.
+4. Enter the folder you want to start in (for example `/` or `/var/www`) and click **Connect**.
+
+The listing then works just like local mode: every folder is measured
+recursively and shown with its size and percentage bar, double-click a folder to
+go into it, use **Up Folder** to go back, and the trash icon deletes an item on
+the server after a confirmation prompt. Press **Stop** to cancel a scan that is
+taking too long. Choose **Connection → Local Disk** (or **Disconnect**) to return
+to your own machine.
+
+Notes:
+* Remote sizes are calculated by walking the tree over the connection, so a deep
+  remote folder can take a while — that is what the **Stop** button is for.
+* FTP sizes come from the `MLSD` command when the server supports it, with an
+  automatic fallback to parsing `LIST` output (both UNIX and MS-DOS style).
+* Remote files cannot be opened by double-clicking; download them first.
+* SFTP host keys are loaded from your known_hosts file, and unknown hosts are
+  accepted automatically on first connect.
 
 ---
 
@@ -55,7 +89,12 @@ If you want to run the python source code:
    ```bash
    cd Framanen-DirLens
    ```
-3. Run the script (requires Python 3.x with Tkinter):
+3. Install the optional dependency for SSH (SFTP) mode — local disk, FTP and
+   FTPS work with the standard library alone:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the script (requires Python 3.x with Tkinter):
    ```bash
    python klasor_boyutu.py
    ```
@@ -65,10 +104,30 @@ If you want to run the python source code:
 ## 🛠️ Build from Source
 If you want to package your own `.exe` file using PyInstaller:
 ```bash
-pip install pyinstaller
-pyinstaller --onefile --noconsole klasor_boyutu.py
+pip install pyinstaller paramiko
+pyinstaller --onefile --noconsole --hidden-import paramiko klasor_boyutu.py
 ```
-The executable will be generated inside the `dist/` directory.
+The executable will be generated inside the `dist/` directory. Drop
+`--hidden-import paramiko` if you do not need SSH (SFTP) support.
+
+> The `Framanen_DirLens.exe` currently committed in `dist/` is the 1.0.0 build.
+> Rebuild it with the command above to get the FTP / SSH features in the
+> executable.
+
+---
+
+## 📝 Changelog
+
+### 2.0.0
+* Added FTP, FTPS (TLS) and SFTP (SSH) modes with a connection dialog.
+* Remote folder and file sizes, navigation and deletion, same UI as local mode.
+* Added a **Stop** button to cancel long scans.
+* Added a connection indicator line under the toolbar.
+* Files now open with the system default application on Linux and macOS too.
+* All 7 languages updated with the new interface texts.
+
+### 1.0.0
+* Initial release: local folder scanning, size ratio bars, deletion and 7 languages.
 
 ---
 
