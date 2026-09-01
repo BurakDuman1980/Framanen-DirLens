@@ -755,6 +755,10 @@ class SFTPBackend(RemoteBackend):
         except Exception:
             pass
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        # When the user supplied a credential, use exactly that: probing the SSH
+        # agent and the default key files on top of it only adds failure modes.
+        # Fall back to agent / default keys only when no credential was given.
+        use_agent = not (password or key_file)
         self.client.connect(
             hostname=host,
             port=port,
@@ -762,8 +766,8 @@ class SFTPBackend(RemoteBackend):
             password=password or None,
             key_filename=key_file or None,
             timeout=timeout,
-            allow_agent=True,
-            look_for_keys=True,
+            allow_agent=use_agent,
+            look_for_keys=use_agent,
         )
         self.sftp = self.client.open_sftp()
 

@@ -8,9 +8,13 @@ Developed by **Burak Duman**, this tool is open-source and completely free to us
 
 ---
 
-## 📸 Screenshot
+## 📸 Screenshots
 
 ![Framanen DirLens Screenshot](screenshot2.jpg)
+
+The FTP / SSH connection dialog added in 2.0.0:
+
+![Framanen DirLens FTP / SSH connection dialog](screenshot_connection.png)
 
 ---
 
@@ -77,7 +81,18 @@ You can switch between **7 different languages** dynamically from the **Settings
 ### For End-Users (No Python Required)
 You can directly run the pre-compiled executable file:
 1. Go to the `dist/` folder in this repository.
-2. Download and run **`Framanen_DirLens.exe`**.
+2. Download and run **`Framanen_DirLens.exe`** (or the zipped copy, `klasor_boyutu.zip`).
+
+The published executable is the **2.0.0** build for **64-bit Windows**. It bundles
+Python, Tkinter and Paramiko, so the local, FTP, FTPS and SFTP (SSH) modes all
+work without installing anything else.
+
+```
+File   : dist/Framanen_DirLens.exe
+Version: 2.0.0
+Size   : 16,199,976 bytes
+SHA-256: eacae3f2adf375f5f70d2d13dae848ab60a14de213144636b7288a2adc7cba5f
+```
 
 ### For Developers
 If you want to run the python source code:
@@ -110,9 +125,8 @@ pyinstaller --onefile --noconsole --hidden-import paramiko klasor_boyutu.py
 The executable will be generated inside the `dist/` directory. Drop
 `--hidden-import paramiko` if you do not need SSH (SFTP) support.
 
-> The `Framanen_DirLens.exe` currently committed in `dist/` is the 1.0.0 build.
-> Rebuild it with the command above to get the FTP / SSH features in the
-> executable.
+The `dist/Framanen_DirLens.exe` committed in this repository was produced with
+exactly this command, so rebuilding is only necessary after changing the source.
 
 ---
 
@@ -123,8 +137,11 @@ The executable will be generated inside the `dist/` directory. Drop
 * Remote folder and file sizes, navigation and deletion, same UI as local mode.
 * Added a **Stop** button to cancel long scans.
 * Added a connection indicator line under the toolbar.
+* SSH connections use exactly the credential you provide; the SSH agent and
+  your default key files are only tried when no password and no key file is given.
 * Files now open with the system default application on Linux and macOS too.
 * All 7 languages updated with the new interface texts.
+* `dist/Framanen_DirLens.exe` rebuilt from the 2.0.0 source with Paramiko bundled.
 
 ### 1.0.0
 * Initial release: local folder scanning, size ratio bars, deletion and 7 languages.
