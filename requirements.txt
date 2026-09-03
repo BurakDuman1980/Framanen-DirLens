@@ -1,0 +1,5 @@
+# Framanen DirLens dependencies
+#
+# The local disk and FTP / FTPS modes need nothing beyond the Python standard
+# library (tkinter + ftplib). Paramiko is only required for SSH (SFTP) mode.
+paramiko>=3.0
