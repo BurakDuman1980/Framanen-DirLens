@@ -148,6 +148,15 @@ exactly this command, so rebuilding is only necessary after changing the source.
 
 ---
 
+## 🧭 For Contributors
+
+[PROJECT.md](PROJECT.md) documents the internals in Turkish: architecture, the
+storage-backend contract shared by the local / FTP / SFTP modes, the scan and
+threading flow, how the 7 language dictionaries fit together, packaging notes
+and the testing approach.
+
+---
+
 ## 📄 License
 
 This project is open-source and free to use. Feel free to clone, modify, and distribute!
